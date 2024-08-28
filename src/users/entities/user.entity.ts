@@ -38,7 +38,7 @@ export class User {
     type: 'enum',
     enum: RoleEnum,
   })
-  role: RoleEnum;
+  roles: RoleEnum;
 
   @Column({
     type: 'enum',

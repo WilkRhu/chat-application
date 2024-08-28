@@ -30,7 +30,7 @@ describe('AuthService', () => {
     email: 'test@example.com',
     name: 'Test User',
     password: 'hashedPassword',
-    role: RoleEnum.ADMIN,
+    roles: RoleEnum.ADMIN,
     status: Status.ACTIVATED,
   };
 
@@ -102,7 +102,7 @@ describe('AuthService', () => {
       uuid: '123',
       email: 'test@example.com',
       name: 'Test User',
-      role: RoleEnum.ADMIN,
+      roles: RoleEnum.ADMIN,
       status: Status.ACTIVATED,
     });
   });
@@ -111,7 +111,7 @@ describe('AuthService', () => {
     const user = {
       uuid: '123',
       email: 'test@example.com',
-      role: RoleEnum.ADMIN,
+      roles: RoleEnum.ADMIN,
       status: Status.ACTIVATED,
     };
     jest.spyOn(authService, 'login').mockResolvedValue({

@@ -49,7 +49,7 @@ describe('UserService', () => {
       ...createUserDto,
       uuid: '123',
       password: 'hashedPassword',
-      role: 'admin',
+      roles: 'admin',
       status: 'activated',
     });
     expect(userRepository.save).toHaveBeenCalledWith(createUserDto);
@@ -64,7 +64,7 @@ describe('UserService', () => {
         email: 'test@example.com',
         name: 'Test User',
         password: 'hashedPassword',
-        role: 'admin',
+        roles: 'admin',
         status: 'activated',
       },
     ]);
@@ -79,7 +79,7 @@ describe('UserService', () => {
       uuid: '123',
       email: 'test@example.com',
       name: 'Test User',
-      role: 'admin',
+      roles: 'admin',
       status: 'activated',
     });
     expect(userRepository.findOne).toHaveBeenCalledWith({ where: { uuid } });
@@ -99,7 +99,7 @@ describe('UserService', () => {
       email: 'updated@example.com',
       name: 'Updated User',
       password: 'hashedPassword',
-      role: 'admin',
+      roles: 'admin',
       status: 'activated',
     });
   });

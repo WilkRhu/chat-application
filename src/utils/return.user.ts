@@ -4,7 +4,7 @@ export function extractUserFields(user) {
     name: user.name,
     email: user.email,
     status: user.status,
-    role: user.status,
+    roles: user.roles,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
   };

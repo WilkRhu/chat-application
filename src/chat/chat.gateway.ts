@@ -42,7 +42,6 @@ export class ChatGateway
         throw new Error('Sender or receiver not found');
       }
 
-      // Crie a mensagem
       const message = await this.messageService.createMessage(
         payload.content,
         payload.senderId,
@@ -53,8 +52,6 @@ export class ChatGateway
       this.server.emit('message', message);
     } catch (error) {
       this.logger.error('Erro ao processar a mensagem:', error);
-
-      // Verifique se o cliente ainda está conectado antes de enviar o erro
       if (client.connected) {
         client.emit('error', { message: error.message });
       }
