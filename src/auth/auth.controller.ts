@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { LoginDto } from './dto/login.dto';
+import { CreateUserDto } from '@/users/dto/create-user.dto';
 
 @Controller('auth')
 @ApiTags('auth')
