@@ -2,7 +2,7 @@
 import { UserService } from '@/users/users.service';
 import { comparePasswords, hashPassword } from '@/utils/hashing.utils';
 import { extractUserFields } from '@/utils/return.user';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -29,15 +29,25 @@ export class AuthService {
   }
 
   public async login(user) {
-    const paylod = {
-      uuid: user.uuid,
-      email: user.email,
-      role: user.role,
-      status: user.status,
-    };
-    return {
-      access_token: this.jwtService.sign(paylod),
-    };
+    try {
+      const paylod = {
+        uuid: user.uuid,
+        email: user.email,
+        role: user.role,
+        status: user.status,
+      };
+      return {
+        access_token: this.jwtService.sign(paylod),
+      };
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: error.message || 'NOT FOUND',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   public async create(user) {
@@ -54,10 +64,13 @@ export class AuthService {
 
       return { user: extractUserFields(newUser), token };
     } catch (error) {
-      return {
-        status: 400,
-        error,
-      };
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: error.message || 'Internal Server Error',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 

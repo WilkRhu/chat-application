@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidateInputPipe } from './shared/infrastructure/core/pipe/validate.pipes';
+import { ValidateInputPipe } from './shared/infrastructure/pipe/validate.pipes';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,7 +11,7 @@ async function bootstrap() {
     credentials: true,
   });
   const config = new DocumentBuilder()
-    .setTitle('Project Estudos Nestjs')
+    .setTitle('Chat App')
     .setDescription('Api de estudos para o framework nestjs')
     .setVersion('1.0')
     .addTag('')

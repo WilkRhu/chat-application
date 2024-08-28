@@ -1,34 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
+@ApiTags('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  async login(@Request() req: any, @Body() user: LoginDto) {
+    return await this.authService.login(req.user);
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  @Post('signup')
+  async signUp(@Body() user: CreateUserDto) {
+    return await this.authService.create(user);
   }
 }

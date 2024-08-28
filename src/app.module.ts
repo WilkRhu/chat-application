@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { DatabaseModule } from './shared/infrastructure/core/database/database.module';
 import { EnvConfigModule } from './shared/infrastructure/env-config/env-config.module';
+import { DatabaseModule } from './shared/infrastructure/database/database.module';
 
 @Module({
   imports: [
