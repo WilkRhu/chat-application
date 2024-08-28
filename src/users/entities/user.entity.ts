@@ -41,7 +41,7 @@ export class User {
   @Column({
     type: 'enum',
     enum: Status,
-    default: Status.ACTVATED,
+    default: Status.ACTIVATED,
   })
   status: Status;
 

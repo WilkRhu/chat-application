@@ -53,8 +53,10 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
-  async remove(uuid: string) {
+  async remove(uuid: string): Promise<string> {
     const deleteUser = await this.userRepository.delete(uuid);
-    return deleteUser ? 'User Removed Successfuly!' : 'Error remove User';
+    return deleteUser.affected > 0
+      ? 'User Removed Successfully!'
+      : 'Error removing User';
   }
 }
