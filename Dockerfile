@@ -1,4 +1,5 @@
-FROM node:18 AS build
+# Etapa de build
+FROM node:20 AS build
 
 WORKDIR /app
 
@@ -10,14 +11,17 @@ COPY . .
 
 RUN npm run build
 
-FROM node:18-slim
+FROM node:20 AS production
 
 WORKDIR /app
 
 COPY --from=build /app/dist ./dist
+
+COPY --from=build /app/node_modules ./node_modules
+
 COPY package*.json ./
 
-RUN npm install --only=production
+ENV NODE_ENV=production
 
 EXPOSE 3000
 
