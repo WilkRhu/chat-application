@@ -1,6 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { User } from 'src/users/entities/user.entity';
+import { Message } from '@/message/entities/message.entity';
 
 export const getDatabaseConfig = (
   configService: ConfigService,
@@ -9,7 +10,7 @@ export const getDatabaseConfig = (
     return {
       type: 'sqlite',
       database: ':memory:',
-      entities: [User],
+      entities: [User, Message],
       synchronize: true,
       dropSchema: true,
     };
