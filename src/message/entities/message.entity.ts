@@ -9,12 +9,6 @@ export class Message {
   @Column()
   content: string;
 
-  @Column()
-  senderId: string;
-
-  @Column()
-  receiverId: string;
-
   @ManyToOne(() => User, (user) => user.sentMessages)
   sender: User;
 

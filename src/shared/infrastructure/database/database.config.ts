@@ -22,7 +22,7 @@ export const getDatabaseConfig = (
       username: configService.get<string>('DATABASE_USERNAME', 'root'),
       password: configService.get<string>('DATABASE_PASSWORD', 'tisaude'),
       database: configService.get<string>('DATABASE_NAME', 'chat_app'),
-      entities: [User],
+      entities: [User, Message],
       synchronize: true,
       logging: configService.get<string>('DB_LOGGING', 'false') === 'true',
     };

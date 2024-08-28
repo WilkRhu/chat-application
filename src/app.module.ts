@@ -5,9 +5,6 @@ import { UsersModule } from './users/users.module';
 import { EnvConfigModule } from './shared/infrastructure/env-config/env-config.module';
 import { DatabaseModule } from './shared/infrastructure/database/database.module';
 import { ChatGateway } from './chat/chat.gateway';
-import { MessageService } from './message/message.service';
-import { ChatModule } from './chat/chat.module';
-import { MessageModule } from './message/message.module';
 import { MessageModule } from './message/message.module';
 
 @Module({
@@ -20,10 +17,9 @@ import { MessageModule } from './message/message.module';
     UsersModule,
     AuthModule,
     EnvConfigModule,
-    ChatModule,
     MessageModule,
   ],
   controllers: [],
-  providers: [ChatGateway, MessageService],
+  providers: [ChatGateway],
 })
 export class AppModule {}
