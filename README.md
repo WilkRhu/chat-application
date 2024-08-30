@@ -1,73 +1,105 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Chat App
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat-square&logo=nestjs&logoColor=white)
+![TypeORM](https://img.shields.io/badge/TypeORM-FE4C00?style=flat-square&logo=typeorm&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
+![WebSocket](https://img.shields.io/badge/WebSocket-010101?style=flat-square&logo=websocket&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=swagger&logoColor=black)
+![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat-square&logo=eslint&logoColor=white)
+![Jest](https://img.shields.io/badge/Jest-C21325?style=flat-square&logo=jest&logoColor=white)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Sumário
 
-## Description
+- [Resumo](#resumo)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação](#instalação)
+- [Execução](#execução)
+- [Documentação da API](#documentação-da-api)
+- [Testes](#testes)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Resumo
 
-## Installation
+O **Chat App** é uma aplicação de chat desenvolvida para gerenciar usuários e conversas em tempo real. A aplicação permite a autenticação de usuários com três tipos de roles: `admin`, `enduser` e `employee`. Além disso, fornece funcionalidades de chat para salvar e pesquisar conversas.
+Utilizamos o **UserGuard**, **Jwt** e **Passport** para garantir a segurança e a autenticação dos usuários.
 
-```bash
-$ npm install
-```
+## Tecnologias Utilizadas
 
-## Running the app
+- **NestJS**: Framework Node.js para construir aplicações do lado do servidor.
+- **TypeORM**: ORM para interação com bancos de dados.
+- **Docker**: Plataforma para criação e gerenciamento de contêineres.
+- **MySQL**: Sistema de gerenciamento de banco de dados relacional.
+- **WebSocket**: Protocolo de comunicação para aplicações em tempo real.
+- **Swagger**: Ferramenta para documentar APIs RESTful.
+- **ESLint**: Ferramenta para análise estática de código e formatação.
+- **Jest**: Framework de testes em JavaScript.
 
-```bash
-# development
-$ npm run start
+## Pré-requisitos
 
-# watch mode
-$ npm run start:dev
+Antes de começar, você precisará ter as seguintes ferramentas instaladas em sua máquina:
 
-# production mode
-$ npm run start:prod
-```
+- [Node.js](https://nodejs.org/)
+- [Docker](https://www.docker.com/)
 
-## Test
+Além disso, é recomendável usar um bom editor de texto, como o [VSCode](https://code.visualstudio.com/).
 
-```bash
-# unit tests
-$ npm run test
+## Instalação
 
-# e2e tests
-$ npm run test:e2e
+1. Clone o repositório:
 
-# test coverage
-$ npm run test:cov
-```
+   ```bash
+   git clone https://github.com/WilkRhu/chat-application
+   cd chat-app
 
-## Support
+Instale as dependências:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+npm install
+Configure o ambiente criando um arquivo .env baseado no .env.example.
 
-## Stay in touch
+Execução
+Para iniciar a aplicação usando Docker, execute o seguinte comando:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+docker-compose up
+Isso iniciará a aplicação junto com o banco de dados MySQL em contêineres Docker.
 
-## License
+Se você preferir rodar a aplicação localmente, sem Docker:
 
-Nest is [MIT licensed](LICENSE).
+npm run start
+A aplicação estará disponível em http://localhost:3001.
+
+Documentação da API
+A documentação da API está disponível via Swagger. Após iniciar a aplicação, acesse:
+
+http://localhost:3001/api
+
+## Testes
+Para rodar os testes, utilize o seguinte comando:
+
+npm run test
+Este comando executará todos os testes escritos com Jest. Para rodar os testes em modo watch:
+
+npm run test:watch
+Formatação de Código
+Para garantir que o código está formatado corretamente de acordo com as regras do ESLint, execute:
+
+npm run lint
+Caso precise corrigir automaticamente os problemas encontrados:
+
+npm run lint:fix
+
+## Execução
+
+Usando Docker
+A aplicação já possui uma configuração para ser executada usando Docker e Docker Compose. Siga os passos abaixo para rodar a aplicação em contêineres Docker:
+
+Certifique-se de que o Docker e o Docker Compose estão instalados em sua máquina.
+
+Inicie a aplicação com o Docker Compose:
+
+bash
+Copiar código
+docker-compose up
+Este comando irá criar e iniciar os contêineres para a aplicação e o banco de dados MySQL.
+
+A aplicação estará disponível em http://localhost:3001.
