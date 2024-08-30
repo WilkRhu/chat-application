@@ -53,9 +53,6 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Message, (message) => message.sender)
+  @OneToMany(() => Message, (message) => message.senderId)
   sentMessages: Message[];
-
-  @OneToMany(() => Message, (message) => message.receiver)
-  receivedMessages: Message[];
 }

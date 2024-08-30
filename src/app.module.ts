@@ -4,8 +4,10 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { EnvConfigModule } from './shared/infrastructure/env-config/env-config.module';
 import { DatabaseModule } from './shared/infrastructure/database/database.module';
-import { ChatGateway } from './chat/chat.gateway';
 import { MessageModule } from './message/message.module';
+import { ChatModule } from './chat/chat.module';
+import { ChatParticipantsModule } from './chat_participants/chat_participants.module';
+import { ChatGateway } from './geteway/chat.gateway';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { MessageModule } from './message/message.module';
     AuthModule,
     EnvConfigModule,
     MessageModule,
+    ChatModule,
+    ChatParticipantsModule,
   ],
   controllers: [],
   providers: [ChatGateway],

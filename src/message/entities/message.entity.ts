@@ -1,5 +1,13 @@
+import { Chat } from '@/chat/entities/chat.entity';
 import { User } from '@/users/entities/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('messages')
 export class Message {
@@ -7,14 +15,23 @@ export class Message {
   id: string;
 
   @Column()
+  chatId: string;
+
+  @Column()
   content: string;
 
   @ManyToOne(() => User, (user) => user.sentMessages)
-  sender: User;
+  senderId: User;
 
-  @ManyToOne(() => User, (user) => user.receivedMessages)
-  receiver: User;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  timestamp: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @ManyToOne(() => User, (user) => user.uuid)
+  user: User;
+
+  @ManyToOne(() => Chat, (chat) => chat.messages)
+  chat_message: Chat;
 }

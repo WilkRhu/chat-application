@@ -8,7 +8,7 @@
       "args": ["${workspaceFolder}/src/main.ts"],
       "runtimeArgs": ["--nolazy", "-r", "ts-node/register", "-r", "tsconfig-paths/register"],
       "sourceMaps": true,
-      "envFile": "${workspaceFolder}/.env",
+      "envFile": "${workspaceFolder}/.env.development",
       "cwd": "${workspaceFolder}",  // Corrigido para `${workspaceFolder}`
       "console": "integratedTerminal",
       "protocol": "inspector"
