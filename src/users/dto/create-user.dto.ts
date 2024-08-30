@@ -33,7 +33,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: 'Status do usuário padrão ativo',
-    example: Status.ACTVATED,
+    example: Status.ACTIVATED,
   })
   status: Status;
 

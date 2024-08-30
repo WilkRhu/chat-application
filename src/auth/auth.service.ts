@@ -33,7 +33,7 @@ export class AuthService {
       const paylod = {
         uuid: user.uuid,
         email: user.email,
-        role: user.role,
+        roles: user.roles,
         status: user.status,
       };
       return {
@@ -58,7 +58,6 @@ export class AuthService {
         ...user,
         password: pass,
       });
-
       const { password, ...result } = newUser;
       const token = await this.generateToken(result);
 

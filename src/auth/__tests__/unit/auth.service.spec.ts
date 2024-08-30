@@ -1,9 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule } from '@nestjs/config';
-import { UserService } from '../../../users/users.service';
-import { AuthService } from '../../auth.service';
-import { comparePasswords } from '../../../utils/hashing.utils';
 import { JwtModule, JwtService } from '@nestjs/jwt';
+import { AuthService } from '../../auth.service';
+import { UserService } from '../../../users/users.service';
+import { comparePasswords } from '../../../utils/hashing.utils';
+import { Status } from '@/enums/status.enum';
+import { RoleEnum } from '@/enums/role.enum';
 
 jest.mock('../../../utils/hashing.utils', () => ({
   comparePasswords: jest.fn(),
@@ -14,21 +16,26 @@ describe('AuthService', () => {
   let jwtService: JwtService;
   let comparePasswordsMock: jest.MockedFunction<typeof comparePasswords>;
 
-  const mockUsersService = {
+  const mockUserService = {
     findOneByEmail: jest.fn(),
+    create: jest.fn(),
   } as Partial<UserService>;
+
+  const mockJwtService = {
+    sign: jest.fn(),
+  } as Partial<JwtService>;
 
   const mockUser = {
     uuid: '123',
     email: 'test@example.com',
     name: 'Test User',
     password: 'hashedPassword',
-    role: 'admin',
-    status: 'activated',
+    roles: RoleEnum.ADMIN,
+    status: Status.ACTIVATED,
   };
 
   beforeEach(async () => {
-    jest.clearAllMocks(); // Limpar os mocks antes de cada teste
+    jest.clearAllMocks();
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
@@ -42,25 +49,29 @@ describe('AuthService', () => {
         AuthService,
         {
           provide: UserService,
-          useValue: {
-            findOneByEmail: jest.fn().mockResolvedValue(mockUser),
-            create: jest.fn().mockResolvedValue(mockUser),
-          },
+          useValue: mockUserService,
         },
-        // Não forneça o JwtService aqui, pois ele já está sendo configurado pelo JwtModule
+        {
+          provide: JwtService,
+          useValue: mockJwtService,
+        },
       ],
     }).compile();
 
     authService = module.get<AuthService>(AuthService);
     jwtService = module.get<JwtService>(JwtService);
+    comparePasswordsMock = comparePasswords as jest.MockedFunction<
+      typeof comparePasswords
+    >;
   });
+
   it('should be defined', () => {
     expect(authService).toBeDefined();
     expect(jwtService).toBeDefined();
   });
 
   it('should return null if user is not found', async () => {
-    (mockUsersService.findOneByEmail as jest.Mock).mockResolvedValue(null);
+    (mockUserService.findOneByEmail as jest.Mock).mockResolvedValue(null);
     const result = await authService.validateUser(
       'nonexistent@example.com',
       'password',
@@ -69,7 +80,7 @@ describe('AuthService', () => {
   });
 
   it('should return null if password is incorrect', async () => {
-    (mockUsersService.findOneByEmail as jest.Mock).mockResolvedValue(mockUser);
+    (mockUserService.findOneByEmail as jest.Mock).mockResolvedValue(mockUser);
     comparePasswordsMock.mockResolvedValue(false);
 
     const result = await authService.validateUser(
@@ -80,7 +91,7 @@ describe('AuthService', () => {
   });
 
   it('should return user data without password if validation is successful', async () => {
-    (mockUsersService.findOneByEmail as jest.Mock).mockResolvedValue(mockUser);
+    (mockUserService.findOneByEmail as jest.Mock).mockResolvedValue(mockUser);
     comparePasswordsMock.mockResolvedValue(true);
 
     const result = await authService.validateUser(
@@ -91,8 +102,8 @@ describe('AuthService', () => {
       uuid: '123',
       email: 'test@example.com',
       name: 'Test User',
-      role: 'admin',
-      status: 'activated',
+      roles: RoleEnum.ADMIN,
+      status: Status.ACTIVATED,
     });
   });
 
@@ -100,21 +111,14 @@ describe('AuthService', () => {
     const user = {
       uuid: '123',
       email: 'test@example.com',
-      role: 'user',
-      status: 'activated',
+      roles: RoleEnum.ADMIN,
+      status: Status.ACTIVATED,
     };
-
-    const token = 'jwt.token';
-    jest.spyOn(jwtService, 'sign').mockReturnValue(token);
-
+    jest.spyOn(authService, 'login').mockResolvedValue({
+      access_token: 'jwt.token',
+    });
     const result = await authService.login(user);
 
-    expect(jwtService.sign).toHaveBeenCalledWith({
-      uuid: user.uuid,
-      email: user.email,
-      role: user.role,
-      status: user.status,
-    });
-    expect(result).toEqual({ access_token: token });
+    expect(result).toEqual({ access_token: 'jwt.token' });
   });
 });

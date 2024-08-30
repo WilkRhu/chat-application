@@ -1,16 +1,18 @@
 import { RoleEnum } from '@/enums/role.enum';
 import { Status } from '@/enums/status.enum';
+import { Message } from '@/message/entities/message.entity';
 import { Exclude } from 'class-transformer';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity('user')
 export class User {
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
@@ -36,12 +38,12 @@ export class User {
     type: 'enum',
     enum: RoleEnum,
   })
-  role: RoleEnum;
+  roles: RoleEnum;
 
   @Column({
     type: 'enum',
     enum: Status,
-    default: Status.ACTVATED,
+    default: Status.ACTIVATED,
   })
   status: Status;
 
@@ -50,4 +52,7 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Message, (message) => message.senderId)
+  sentMessages: Message[];
 }

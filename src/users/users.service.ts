@@ -47,14 +47,18 @@ export class UserService {
   async update(uuid: string, updateUserDto: UpdateUserDto) {
     const { name, email } = updateUserDto;
     const user = await this.findOne(uuid);
-    user.name = name ? name : user.name;
-    user.email = email ? email : user.email;
+    user.name = name ?? user.name;
+    user.email = email ?? user.email;
+    user.status = updateUserDto.status ?? user.status;
+    user.roles = updateUserDto.roles ?? user.roles;
 
     return await this.userRepository.save(user);
   }
 
-  async remove(uuid: string) {
+  async remove(uuid: string): Promise<string> {
     const deleteUser = await this.userRepository.delete(uuid);
-    return deleteUser ? 'User Removed Successfuly!' : 'Error remove User';
+    return deleteUser.affected > 0
+      ? 'User Removed Successfully!'
+      : 'Error removing User';
   }
 }

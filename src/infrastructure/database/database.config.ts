@@ -1,6 +1,9 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { User } from 'src/users/entities/user.entity';
+import { Message } from '@/message/entities/message.entity';
+import { Chat } from '@/chat/entities/chat.entity';
+import { ChatParticipant } from '@/chat_participants/entities/chat_participants.entity';
 
 export const getDatabaseConfig = (
   configService: ConfigService,
@@ -9,7 +12,7 @@ export const getDatabaseConfig = (
     return {
       type: 'sqlite',
       database: ':memory:',
-      entities: [User],
+      entities: [User, Message, Chat, ChatParticipant],
       synchronize: true,
       dropSchema: true,
     };
@@ -21,7 +24,7 @@ export const getDatabaseConfig = (
       username: configService.get<string>('DATABASE_USERNAME', 'root'),
       password: configService.get<string>('DATABASE_PASSWORD', 'tisaude'),
       database: configService.get<string>('DATABASE_NAME', 'chat_app'),
-      entities: [User],
+      entities: [User, Message, Chat, ChatParticipant],
       synchronize: true,
       logging: configService.get<string>('DB_LOGGING', 'false') === 'true',
     };
