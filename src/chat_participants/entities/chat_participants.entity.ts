@@ -21,9 +21,6 @@ export class ChatParticipant {
   @Column()
   senderId: string;
 
-  @Column()
-  reciverId: string;
-
   @CreateDateColumn()
   joinedAt: Date;
 
