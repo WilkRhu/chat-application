@@ -13,9 +13,9 @@ services:
 
   chat-application:
     build: .
-    container_name: chat-application
     ports:
-      - "3000:3000"
+      - "3001:3001"
+      - "3002:3002"
     env_file:
       - .env 
     depends_on:

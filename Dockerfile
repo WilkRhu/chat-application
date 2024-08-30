@@ -21,8 +21,10 @@ COPY --from=build /app/node_modules ./node_modules
 
 COPY package*.json ./
 
-ENV NODE_ENV=production
+ENV NODE_ENV=prod
 
-EXPOSE 3000
+EXPOSE 3001
+EXPOSE 3002
+
 
 CMD ["node", "dist/main"]
