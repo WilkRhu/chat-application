@@ -90,6 +90,9 @@ describe('UserService', () => {
     const updateUserDto: UpdateUserDto = {
       name: 'Updated User',
       email: 'updated@example.com',
+      password: '',
+      status: Status.ACTIVATED,
+      roles: RoleEnum.ADMIN,
     };
 
     const result = await userService.update(uuid, updateUserDto);

@@ -24,11 +24,6 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsString()
   email: string;
 
-  @ApiProperty({
-    description: 'A senha do usuário',
-    minLength: 8,
-    example: 'password123',
-  })
   @IsString()
   password: string;
 
