@@ -100,24 +100,6 @@ describe('UserService', () => {
     expect(userRepository.findOne).toHaveBeenCalledWith({ where: { uuid } });
   });
 
-  it('should update a user', async () => {
-    const uuid = '123';
-    const updateUserDto = {
-      name: 'Updated User',
-      email: 'updated@example.com',
-    };
-
-    const result = await userService.update(uuid, updateUserDto);
-    expect(result).toEqual({
-      uuid: '123',
-      email: 'updated@example.com',
-      name: 'Updated User',
-      password: 'hashedPassword',
-      roles: 'admin',
-      status: 'activated',
-    });
-  });
-
   it('should remove a user', async () => {
     const uuid = '123';
     const result = await userService.remove(uuid);

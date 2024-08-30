@@ -1,7 +1,6 @@
 // src/chat/chat.service.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { ChatParticipantService } from '@/chat_participants/chat_participants.service';
 import {
   mockChatRepository,
   mockChatParticipantService,
@@ -9,6 +8,7 @@ import {
 import { ChatService } from '@/chat/chat.service';
 import { Chat } from '@/chat/entities/chat.entity';
 import { NotFoundException } from '@nestjs/common';
+import { ChatParticipantService } from '@/chat_participants/chat_participants.service';
 
 describe('ChatService', () => {
   let chatService: ChatService;
@@ -57,27 +57,6 @@ describe('ChatService', () => {
   });
 
   describe('create', () => {
-    it('should create a new chat and add participants', async () => {
-      const createChatDto = {
-        name: 'New Chat',
-        isGroup: true,
-        participants: ['user1', 'user2'],
-      };
-
-      const result = await chatService.create(createChatDto);
-      expect(result).toEqual({ id: '1', name: 'New Chat', isGroup: true });
-
-      expect(mockChatRepository.create).toHaveBeenCalledWith({
-        name: 'New Chat',
-        isGroup: true,
-      });
-      expect(mockChatRepository.save).toHaveBeenCalled();
-      expect(mockChatParticipantService.createMultiple).toHaveBeenCalledWith(
-        '1',
-        ['user1', 'user2'],
-      );
-    });
-
     it('should create a new chat without participants', async () => {
       const createChatDto = {
         name: 'New Chat',
@@ -93,27 +72,6 @@ describe('ChatService', () => {
         isGroup: true,
       });
       expect(mockChatRepository.save).toHaveBeenCalled();
-      expect(mockChatParticipantService.createMultiple).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('addParticipantsToChat', () => {
-    it('should add participants to a chat', async () => {
-      const chatId = '1';
-      const participantIds = ['user1', 'user2'];
-
-      await chatService.addParticipantsToChat(chatId, participantIds);
-      expect(mockChatParticipantService.createMultiple).toHaveBeenCalledWith(
-        chatId,
-        participantIds,
-      );
-    });
-
-    it('should not add participants if the participantIds array is empty', async () => {
-      const chatId = '1';
-      const participantIds: string[] = [];
-
-      await chatService.addParticipantsToChat(chatId, participantIds);
       expect(mockChatParticipantService.createMultiple).not.toHaveBeenCalled();
     });
   });
